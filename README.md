@@ -66,6 +66,16 @@ Consejos:
 - Escapa caracteres especiales en usuario/contraseña.
 - Verifica puerto TLS/STARTTLS de tu servidor (587 suele ser STARTTLS).
 
+### Múltiples destinos y destinatarios
+- Varios destinatarios SMTP (separados por coma):
+```env
+WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com,devops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes
+```
+- Varios destinos (ej. SMTP + Telegram) separados por ';':
+```env
+WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes;telegram://TOKEN@CHATID
+```
+
 ## Troubleshooting
 ```bash
 docker logs watchtower --tail=200
