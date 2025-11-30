@@ -1,0 +1,11 @@
+# General
+.env
+.DS_Store
+Thumbs.db
+
+# Logs y temporales
+logs/
+*.log
+
+# Docker
+*.tmp
