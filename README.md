@@ -42,3 +42,22 @@ docker logs watchtower --tail=200
 
 ---
 Última actualización: Nov 2025
+
+## Ejemplos de etiquetas
+
+### Portainer (actualizable)
+`yaml
+labels:
+  - "com.centurylinklabs.watchtower.enable=true"
+`
+
+### NGINX Proxy Manager (excluir)
+`yaml
+labels:
+  - "com.centurylinklabs.watchtower.enable=false"
+`
+
+### Servicios críticos (incluir solo en ventanas)
+- Usa WATCHTOWER_SCHEDULE para horarios de mantenimiento.
+- Considera WATCHTOWER_INCLUDE_STOPPED=true si paras antes.
+
