@@ -5,21 +5,14 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Europe/Madrid
-    services:
-      watchtower:
-        image: containrrr/watchtower:latest
-        container_name: watchtower
-        restart: unless-stopped
-        environment:
-          - TZ=Europe/Madrid
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock:ro
-        command:
-          - --label-enable          # Solo contenedores con label enable=true
-          - --cleanup               # Elimina imágenes antiguas tras actualizar
-          - --schedule=0 30 3 * * * # Ejecuta cada día a las 03:30
-          - --stop-timeout=30s      # Tiempo de gracia al parar contenedores
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - --label-enable          # Solo contenedores con label enable=true
+      - --cleanup               # Elimina imágenes antiguas tras actualizar
+      - --schedule=0 30 3 * * * # Ejecuta cada día a las 03:30
+      - --stop-timeout=30s      # Tiempo de gracia al parar contenedores
 
-    # Añade en cada servicio que quieras actualizar:
-    # labels:
-    #   - "com.centurylinklabs.watchtower.enable=true"
+# Añade en cada servicio que quieras actualizar:
+# labels:
+#   - "com.centurylinklabs.watchtower.enable=true"
