@@ -54,6 +54,18 @@ environment:
 - Mantén backups si actualizas servicios con datos persistentes
 - Excluye servicios que gestionas manualmente (`enable=false`)
 
+## Notificaciones SMTP (Shoutrrr)
+Activa notificaciones con Shoutrrr y usa una URL SMTP en `.env`:
+```env
+WATCHTOWER_NOTIFICATIONS=shoutrrr
+WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes
+WATCHTOWER_NOTIFIER_LEVEL=info
+WATCHTOWER_NOTIFICATIONS_REPORT=true
+```
+Consejos:
+- Escapa caracteres especiales en usuario/contraseña.
+- Verifica puerto TLS/STARTTLS de tu servidor (587 suele ser STARTTLS).
+
 ## Troubleshooting
 ```bash
 docker logs watchtower --tail=200

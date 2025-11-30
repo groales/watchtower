@@ -5,6 +5,10 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Europe/Madrid
+      - WATCHTOWER_NOTIFICATIONS=${WATCHTOWER_NOTIFICATIONS}
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL}
+      - WATCHTOWER_NOTIFIER_LEVEL=${WATCHTOWER_NOTIFIER_LEVEL}
+      - WATCHTOWER_NOTIFICATIONS_REPORT=${WATCHTOWER_NOTIFICATIONS_REPORT}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
