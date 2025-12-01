@@ -54,26 +54,67 @@ environment:
 - Mantén backups si actualizas servicios con datos persistentes
 - Excluye servicios que gestionas manualmente (`enable=false`)
 
-## Notificaciones SMTP (Shoutrrr)
-Activa notificaciones con Shoutrrr y usa una URL SMTP en `.env`:
+## Notificaciones
+
+Watchtower usa **env_file** para cargar variables desde `.env`, simplificando la configuración.
+
+### Configuración básica
+
+1. Copia el archivo de ejemplo:
+```bash
+cp .env.example .env
+```
+
+2. Edita `.env` con tu configuración:
 ```env
 WATCHTOWER_NOTIFICATIONS=shoutrrr
-WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes
+WATCHTOWER_NOTIFICATION_URL=smtp://tu-servidor-smtp:25/?from=noreply@midominio.com&to=admin@midominio.com&subject=Watchtower%20-%20Actualizaciones
 WATCHTOWER_NOTIFIER_LEVEL=info
 WATCHTOWER_NOTIFICATIONS_REPORT=true
 ```
-Consejos:
-- Escapa caracteres especiales en usuario/contraseña.
-- Verifica puerto TLS/STARTTLS de tu servidor (587 suele ser STARTTLS).
 
-### Múltiples destinos y destinatarios
-- Varios destinatarios SMTP (separados por coma):
-```env
-WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com,devops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes
+3. Reinicia Watchtower:
+```bash
+docker compose up -d
 ```
-- Varios destinos (ej. SMTP + Telegram) separados por ';':
+
+### SMTP sin autenticación (puerto 25)
+
+Ideal para servidores relay internos o Microsoft 365 Mail Protection:
+
 ```env
-WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes;telegram://TOKEN@CHATID
+# Microsoft 365 Mail Protection (sin autenticación)
+WATCHTOWER_NOTIFICATION_URL=smtp://midominio-com.mail.protection.outlook.com:25/?from=noreply@midominio.com&to=admin@midominio.com&subject=Watchtower%20-%20Actualizaciones
+```
+
+**Nota sobre Microsoft 365 Mail Protection:**
+- Endpoint format: `tudominio-com.mail.protection.outlook.com` (reemplaza `.` del dominio por `-`)
+- Puerto 25, sin autenticación ni TLS
+- Requiere configuración previa de conector de entrada en Microsoft 365
+- Solo acepta correos desde IPs autorizadas (configura en Exchange Admin Center)
+
+### SMTP con autenticación (puerto 587)
+
+Para servidores que requieren credenciales:
+
+```env
+WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes
+```
+
+**Nota:** Escapa caracteres especiales en usuario/contraseña si es necesario.
+
+### Múltiples destinatarios
+
+Separa direcciones con comas:
+```env
+WATCHTOWER_NOTIFICATION_URL=smtp://servidor:25/?from=noreply@midominio.com&to=admin@midominio.com,devops@midominio.com&subject=Watchtower%20-%20Actualizaciones
+```
+
+### Múltiples canales
+
+Separa URLs con punto y coma:
+```env
+WATCHTOWER_NOTIFICATION_URL=smtp://servidor:25/?from=noreply@midominio.com&to=admin@midominio.com;telegram://TOKEN@telegram?channels=CHAT_ID
 ```
 
 ## Troubleshooting
