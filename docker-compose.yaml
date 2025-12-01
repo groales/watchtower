@@ -1,6 +1,6 @@
 services:
   watchtower:
-    image: containrrr/watchtower:latest
+    image: containrrr/watchtower
     container_name: watchtower
     restart: unless-stopped
     env_file:
