@@ -38,14 +38,6 @@ command:
   - --schedule=0 30 3 * * * # Ejecuta cada día a las 03:30 (TZ configurado)
   - --stop-timeout=30s      # Tiempo de gracia al parar contenedores
 ```
-Si prefieres variables en vez de flags, puedes usar:
-```yaml
-environment:
-  - WATCHTOWER_LABEL_ENABLE=true
-  - WATCHTOWER_CLEANUP=true
-  - WATCHTOWER_SCHEDULE=0 30 3 * * *
-  - WATCHTOWER_TIMEOUT=30s
-```
 
 ## Buenas prácticas
 - Etiqueta solo servicios que quieras actualizar
