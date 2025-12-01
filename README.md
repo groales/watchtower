@@ -46,6 +46,18 @@ command:
 - Mantén backups si actualizas servicios con datos persistentes
 - Excluye servicios que gestionas manualmente (`enable=false`)
 
+## Configuración de compatibilidad
+
+Watchtower requiere especificar la versión de API de Docker para compatibilidad:
+
+```yaml
+environment:
+  - TZ=Europe/Madrid
+  - DOCKER_API_VERSION=1.44
+```
+
+Esto asegura que Watchtower funcione correctamente con versiones modernas de Docker Engine.
+
 ## Troubleshooting
 ```bash
 docker logs watchtower --tail=200
