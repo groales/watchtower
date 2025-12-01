@@ -54,68 +54,17 @@ environment:
 - Mantén backups si actualizas servicios con datos persistentes
 - Excluye servicios que gestionas manualmente (`enable=false`)
 
-## Notificaciones
+## Configuración de API Docker
 
-Watchtower usa **env_file** para cargar variables desde `.env`, simplificando la configuración.
+Para compatibilidad con versiones antiguas de Watchtower, se especifica la versión de API en `docker-compose.yaml`:
 
-### Configuración básica
-
-1. Copia el archivo de ejemplo:
-```bash
-cp .env.example .env
+```yaml
+environment:
+  - TZ=Europe/Madrid
+  - DOCKER_API_VERSION=1.44
 ```
 
-2. Edita `.env` con tu configuración:
-```env
-WATCHTOWER_NOTIFICATIONS=shoutrrr
-WATCHTOWER_NOTIFICATION_URL=smtp://tu-servidor-smtp:25/?from=noreply@midominio.com&to=admin@midominio.com&subject=Watchtower%20-%20Actualizaciones
-WATCHTOWER_NOTIFIER_LEVEL=info
-WATCHTOWER_NOTIFICATIONS_REPORT=true
-```
-
-3. Reinicia Watchtower:
-```bash
-docker compose up -d
-```
-
-### SMTP sin autenticación (puerto 25)
-
-Ideal para servidores relay internos o Microsoft 365 Mail Protection:
-
-```env
-# Microsoft 365 Mail Protection (sin autenticación)
-WATCHTOWER_NOTIFICATION_URL=smtp://midominio-com.mail.protection.outlook.com:25/?from=noreply@midominio.com&to=admin@midominio.com&subject=Watchtower%20-%20Actualizaciones
-```
-
-**Nota sobre Microsoft 365 Mail Protection:**
-- Endpoint format: `tudominio-com.mail.protection.outlook.com` (reemplaza `.` del dominio por `-`)
-- Puerto 25, sin autenticación ni TLS
-- Requiere configuración previa de conector de entrada en Microsoft 365
-- Solo acepta correos desde IPs autorizadas (configura en Exchange Admin Center)
-
-### SMTP con autenticación (puerto 587)
-
-Para servidores que requieren credenciales:
-
-```env
-WATCHTOWER_NOTIFICATION_URL=smtp://USUARIO:PASS@smtp.example.com:587/?from=watchtower@midominio.com&to=ops@midominio.com&subject=Watchtower%20Actualizaciones&starttls=Yes
-```
-
-**Nota:** Escapa caracteres especiales en usuario/contraseña si es necesario.
-
-### Múltiples destinatarios
-
-Separa direcciones con comas:
-```env
-WATCHTOWER_NOTIFICATION_URL=smtp://servidor:25/?from=noreply@midominio.com&to=admin@midominio.com,devops@midominio.com&subject=Watchtower%20-%20Actualizaciones
-```
-
-### Múltiples canales
-
-Separa URLs con punto y coma:
-```env
-WATCHTOWER_NOTIFICATION_URL=smtp://servidor:25/?from=noreply@midominio.com&to=admin@midominio.com;telegram://TOKEN@telegram?channels=CHAT_ID
-```
+Esto asegura que Watchtower use una API compatible con Docker moderno.
 
 ## Troubleshooting
 ```bash
