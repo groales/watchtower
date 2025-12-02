@@ -30,7 +30,7 @@ labels:
 ```
 
 ## Configuración (flags usados)
-El `docker-compose.yaml` utiliza flags en lugar de variables de entorno para mayor claridad:
+El `docker-compose.yml` utiliza flags en lugar de variables de entorno para mayor claridad:
 ```yaml
 command:
   - --label-enable          # Solo contenedores con label enable=true
