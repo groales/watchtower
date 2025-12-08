@@ -10,12 +10,57 @@
 - Tiempo de gracia en parada (`--stop-timeout`)
 - Notificaciones (Shoutrrr: Telegram, Slack, Email, etc.)
 
-## Despliegue
+---
+
+## Despliegue con Portainer
+
+1. En Portainer, ir a **Stacks** → **Add stack**
+2. Seleccionar **Repository**
+3. Configurar:
+   - **Repository URL**: `https://git.ictiberia.com/groales/watchtower`
+   - **Repository reference**: `refs/heads/main`
+   - **Compose path**: `docker-compose.yml`
+4. Click en **Deploy the stack**
+
+---
+
+## Despliegue con Docker CLI
+
+Si prefieres trabajar desde la línea de comandos:
+
+### 1. Clonar el repositorio
+
 ```bash
-git clone https://git.ictiberia.com/groales/watchtower
+git clone https://git.ictiberia.com/groales/watchtower.git
 cd watchtower
+```
+
+### 2. Iniciar el servicio
+
+```bash
 docker compose up -d
 ```
+
+Watchtower no requiere configuración de variables de entorno (usa flags en command).
+
+### 3. Verificar el despliegue
+
+```bash
+# Ver logs en tiempo real
+docker compose logs -f watchtower
+
+# Verificar que está monitorizando
+docker compose ps
+```
+
+**Logs esperados**:
+```
+watchtower | Watchtower 1.x.x
+watchtower | Using label-based updates (com.centurylinklabs.watchtower.enable=true)
+watchtower | Checking images every 86400 seconds
+```
+
+---
 
 ## Etiquetado de servicios
 Para que un servicio se auto-actualice, añade la label:
