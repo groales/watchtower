@@ -12,21 +12,7 @@
 
 ---
 
-## Despliegue con Portainer
-
-1. En Portainer, ir a **Stacks** → **Add stack**
-2. Seleccionar **Repository**
-3. Configurar:
-   - **Repository URL**: `https://git.ictiberia.com/groales/watchtower`
-   - **Repository reference**: `refs/heads/main`
-   - **Compose path**: `docker-compose.yml`
-4. Click en **Deploy the stack**
-
----
-
 ## Despliegue con Docker CLI
-
-Si prefieres trabajar desde la línea de comandos:
 
 ### 1. Clonar el repositorio
 
@@ -59,6 +45,18 @@ watchtower | Watchtower 1.x.x
 watchtower | Using label-based updates (com.centurylinklabs.watchtower.enable=true)
 watchtower | Checking images every 86400 seconds
 ```
+
+---
+
+## Despliegue con Portainer
+
+1. En Portainer, ir a **Stacks** → **Add stack**
+2. Seleccionar **Repository**
+3. Configurar:
+   - **Repository URL**: `https://git.ictiberia.com/groales/watchtower`
+   - **Repository reference**: `refs/heads/main`
+   - **Compose path**: `docker-compose.yml`
+4. Click en **Deploy the stack**
 
 ---
 
